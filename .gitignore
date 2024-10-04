@@ -56,3 +56,5 @@ appsettings.Production.json
 # Logs
 *.log
 logs/
+
+GameStore.db
