@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameStore.Api.Data.Migrations
 {
     [DbContext(typeof(GameStoreContext))]
-    [Migration("20241004230609_SeedGenres")]
+    [Migration("20241005001451_SeedGenres")]
     partial class SeedGenres
     {
         /// <inheritdoc />
@@ -29,7 +29,7 @@ namespace GameStore.Api.Data.Migrations
                     b.Property<int>("GenerateId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GenreId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -95,7 +95,9 @@ namespace GameStore.Api.Data.Migrations
                 {
                     b.HasOne("GameStore.Api.Entities.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Genre");
                 });

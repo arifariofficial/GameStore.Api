@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace GameStore.Api.Data.Migrations
 {
     /// <inheritdoc />
@@ -32,7 +34,7 @@ namespace GameStore.Api.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     GenerateId = table.Column<int>(type: "INTEGER", nullable: false),
-                    GenreId = table.Column<int>(type: "INTEGER", nullable: true),
+                    GenreId = table.Column<int>(type: "INTEGER", nullable: false),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
                     ReleaseDate = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
@@ -43,7 +45,20 @@ namespace GameStore.Api.Data.Migrations
                         name: "FK_Games_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Genres",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Fighting" },
+                    { 2, "Roleplaying" },
+                    { 3, "Sports" },
+                    { 4, "Racing" },
+                    { 5, "Kids and Family" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameStore.Api.Data.Migrations
 {
     [DbContext(typeof(GameStoreContext))]
-    [Migration("20241004223545_InitialCreate")]
+    [Migration("20241005001432_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,7 +29,7 @@ namespace GameStore.Api.Data.Migrations
                     b.Property<int>("GenerateId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GenreId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -62,13 +62,42 @@ namespace GameStore.Api.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Fighting"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Roleplaying"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Sports"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Racing"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Kids and Family"
+                        });
                 });
 
             modelBuilder.Entity("GameStore.Api.Entities.Game", b =>
                 {
                     b.HasOne("GameStore.Api.Entities.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreId");
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Genre");
                 });
