@@ -8,12 +8,7 @@ namespace GameStore.Api.Endpoints;
 
 public static class GamesEndpoints
 {
-
     const string GetGameEndpointName = "GetGameById";
-    private static readonly List<GameSummaryDto> games = [
-
-    ];
-
     public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("games").WithParameterValidation();
